@@ -6,7 +6,7 @@ using TMPro;
 
 // Este Script por ahora lo pondremos en el Canvas, pero si acabamos añadiendo
 // cadaveres a los que lootear, por ejemplo, habria que ponerselo a ellos
-public class ItemContainer : MonoBehaviour
+public class InventarioPrincipal : MonoBehaviour
 {
     public GameObject parentWindow;
     public Transform contentWindow; // El GridLayoutGroup que estamos usando
@@ -24,13 +24,13 @@ public class ItemContainer : MonoBehaviour
     private void Start()
     {
         slotPrefab = Resources.Load<GameObject>("Modelos3D/Prefabs/UIItemSlot");
-   
+
         item[] tempItems = new item[3]; // Solo hay 3 tipos de objeto por ahora
         tempItems[0] = Resources.Load<item>("Items/Sword");
         tempItems[1] = Resources.Load<item>("Items/Coin");
         tempItems[2] = Resources.Load<item>("Items/Ring");
 
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 8; i++)
         {
             int index = Random.Range(0, 3);
             int amount = Random.Range(1, tempItems[index].maxStack);
@@ -52,8 +52,9 @@ public class ItemContainer : MonoBehaviour
     public void OpenContainer(List<ItemSlot> slots)
     {
         parentWindow.SetActive(true);
-        title.text = containerName.ToUpper();
-
+        // Es el menú de inicio así que no queremos que tenga título porque queda feo
+        // title.text = containerName.ToUpper();
+        title.text = string.Empty;
         // Loopeamos cada objeto
         for (int i = 0; i < slots.Count; i++)
         {
@@ -71,7 +72,7 @@ public class ItemContainer : MonoBehaviour
     public void CloseContainer()
     {
         // Vamos a traves de cada slot y detach/eliminarlos
-        foreach(UIItemSlot slot in UISlots)
+        foreach (UIItemSlot slot in UISlots)
         {
             // De esta forma los eliminamos de forma segura de la UI
             // sin borrar los datos
@@ -83,3 +84,4 @@ public class ItemContainer : MonoBehaviour
         parentWindow.SetActive(false);
     }
 }
+
