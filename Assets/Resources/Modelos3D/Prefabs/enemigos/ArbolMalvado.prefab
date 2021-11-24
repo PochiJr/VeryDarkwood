@@ -235,7 +235,7 @@ MonoBehaviour:
     m_Bits: 128
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 5
-  bichoPlanta: {fileID: 9111566274910833612, guid: b620d2b9ecbe2f1499a3aaacec72b7a4, type: 3}
+  bichoPlanta: {fileID: 5939633113283842974, guid: b620d2b9ecbe2f1499a3aaacec72b7a4, type: 3}
   timeBetweenAttacks: 2
   sightRange: 40
   stealthRange: 15

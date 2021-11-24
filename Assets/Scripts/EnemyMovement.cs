@@ -19,6 +19,7 @@ public class EnemyMovement : MonoBehaviour
 
     // Turning into bichoplanta
     public GameObject arbolMalvado;
+   
     public float timeBetweenAttacks;
     private bool alreadyAttacked;
 
@@ -55,7 +56,7 @@ public class EnemyMovement : MonoBehaviour
         }
         else
         {
-            if (playerInSightRange && !playerInAttackRange)ChasePlayer();
+            if (playerInSightRange && !playerInAttackRange) ChasePlayer();
             else if (playerInAttackRange) AttackPlayer();
             if (!playerInSightRange && !playerInTransformRange && !playerInAttackRange) TurnIntoTree();
         }
@@ -100,7 +101,7 @@ public class EnemyMovement : MonoBehaviour
             // Codigo del ataque
             // Codigo del ataque
             // Cambiar animacion a ataque
-            Debug.Log("Te estoy atacando");
+            animator.SetBool("isAttacking", true);
 
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
@@ -116,11 +117,12 @@ public class EnemyMovement : MonoBehaviour
         Instantiate(arbolMalvado, transform.position, transform.rotation);
         Destroy(this.gameObject);
 
-        
+
     }
     private void ResetAttack()
     {
-         alreadyAttacked = false;
+        alreadyAttacked = false;
+        animator.SetBool("isAttacking", false);
     }
 
     private void OnDrawGizmosSelected()
@@ -132,4 +134,5 @@ public class EnemyMovement : MonoBehaviour
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, transformRange);
     }
+
 }
