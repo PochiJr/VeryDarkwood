@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MovementManager : MonoBehaviour
 {
@@ -14,6 +15,13 @@ public class MovementManager : MonoBehaviour
 
     // Walking
     public Animator animator;
+
+    // Combate
+    public Image barraSalud;
+    public Image barraSaludGradual;
+    private float velocidadBarraSalud = 0.01f;
+    private bool estaArmado = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,11 +54,42 @@ public class MovementManager : MonoBehaviour
         {
             animator.SetBool("isWalking", false);
         }
-        
+
+        // Receiving damage
+        if (barraSalud.fillAmount < barraSaludGradual.fillAmount)
+        {
+            barraSaludGradual.fillAmount -= Time.deltaTime;
+        }
+
+        // Fighting
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            if (!estaArmado)
+            {
+                animator.SetBool("weaponChange", true);
+                estaArmado = true;
+            } else
+            {
+                animator.SetBool("weaponChange", false);
+                estaArmado = false;
+            }
+        }
+            // Golpear
+        if (Input.GetMouseButtonDown(1))
+        {
+            animator.SetBool("isAttacking", true);
+        }
+
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.tag);
+
+        if (other.tag == "EnemigoArbol") {
+            animator.SetBool("isTakingDamage", true);
+            // Reduccion de salud
+            barraSalud.fillAmount -= 0.3f;
+        }
+
     }
 }
