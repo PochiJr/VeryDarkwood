@@ -21,6 +21,8 @@ public class MovementManager : MonoBehaviour
     public Image barraSaludGradual;
     private float velocidadBarraSalud = 0.01f;
     private bool estaArmado = false;
+    private float ayuda = 0.0f;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -74,11 +76,42 @@ public class MovementManager : MonoBehaviour
                 estaArmado = false;
             }
         }
-            // Golpear
+        // Golpear
         if (Input.GetMouseButtonDown(1))
         {
             animator.SetBool("isAttacking", true);
+            ayuda = 2.0f;
         }
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("GS Slash") && !Input.GetMouseButtonDown(1))
+        {
+            animator.SetBool("isAttacking", false);
+            velocidadMovimiento = 5.0f;
+        }
+
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("GS Slash"))
+        {
+            velocidadMovimiento = 0.0f;
+        }
+        /* 
+          if (Input.GetMouseButtonDown(1))
+        {
+            animator.SetBool("isAttacking", true);
+            ayuda = 2.0f;
+        }
+         if (animator.GetCurrentAnimatorStateInfo(0).IsName("GS Slash") && !Input.GetMouseButtonDown(1))
+         {
+             ayuda -= 0.5f * Time.deltaTime;
+             Debug.Log(ayuda);
+         }
+         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("GS Slash") && !Input.GetMouseButtonDown(1))
+        {
+            animator.SetBool("isAttacking", false);
+        }
+
+         if (ayuda <= 0.0f && !Input.GetMouseButton(1))
+         {
+             animator.SetBool("isAttacking", false);
+         }*/
 
     }
 
