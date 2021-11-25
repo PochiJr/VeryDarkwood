@@ -21,6 +21,7 @@ public class MovementManager : MonoBehaviour
     public Image barraSaludGradual;
     private float velocidadBarraSalud = 0.01f;
     private bool estaArmado = false;
+    private bool heSidoAtacado = false;
     private float ayuda = 0.0f;
     
 
@@ -80,8 +81,8 @@ public class MovementManager : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
             animator.SetBool("isAttacking", true);
-            ayuda = 2.0f;
         }
+
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("GS Slash") && !Input.GetMouseButtonDown(1))
         {
             animator.SetBool("isAttacking", false);
@@ -92,6 +93,26 @@ public class MovementManager : MonoBehaviour
         {
             velocidadMovimiento = 0.0f;
         }
+
+        // Recibir Daño (lo hacemos tanto para Golpe Recibido (sin arma) como para GS Impact (con arma)
+        if ((!animator.GetCurrentAnimatorStateInfo(0).IsName("Golpe Recibido") ||
+            !animator.GetCurrentAnimatorStateInfo(0).IsName("GS Impact")) && heSidoAtacado)
+        {
+            ayuda -= Time.deltaTime;
+            Debug.Log(ayuda);
+            if (ayuda <= 0.0f)
+            {
+                animator.SetBool("isTakingDamage", false);
+                heSidoAtacado = false;
+                velocidadMovimiento = 5.0f;
+            }
+        }
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Golpe Recibido") ||
+            animator.GetCurrentAnimatorStateInfo(0).IsName("GS Impact"))
+        {
+            velocidadMovimiento = 0.0f;
+        }
+
         /* 
           if (Input.GetMouseButtonDown(1))
         {
@@ -119,10 +140,13 @@ public class MovementManager : MonoBehaviour
     {
 
         if (other.tag == "EnemigoArbol") {
+           
             animator.SetBool("isTakingDamage", true);
+
             // Reduccion de salud
             barraSalud.fillAmount -= 0.3f;
+            ayuda = 0.2f;
+            heSidoAtacado = true;
         }
-
     }
 }

@@ -31,6 +31,11 @@ public class EnemyMovement : MonoBehaviour
     public bool isPlayerAtHome = false;
     private Vector3 spawnPoint;
 
+    // Receive Damage
+    private bool heSidoAtacado = false;
+    private float ayuda = 0.0f;
+    public GameObject hitbox;
+
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -61,6 +66,7 @@ public class EnemyMovement : MonoBehaviour
             if (!playerInSightRange && !playerInTransformRange && !playerInAttackRange) TurnIntoTree();
         }
 
+        
     }
 
     /*private void Patroling()
@@ -92,20 +98,49 @@ public class EnemyMovement : MonoBehaviour
     }
     private void AttackPlayer()
     {
-        // Nos aseguramos de que el enemigo no se mueve mientras ataque
-        agent.SetDestination(transform.position);
-        transform.LookAt(player);
 
+        // atacar
         if (!alreadyAttacked)
         {
             // Codigo del ataque
             // Codigo del ataque
             // Cambiar animacion a ataque
             animator.SetBool("isAttacking", true);
-
             alreadyAttacked = true;
+            agent.SetDestination(transform.position);
+            transform.LookAt(player);
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
+
+
+        // recibir daño
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Atacar") &&
+            !animator.GetCurrentAnimatorStateInfo(0).IsName("Arbol Golpeado"))
+        {
+            agent.SetDestination(player.position);
+        }
+
+
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Arbol Golpeado") && heSidoAtacado) {
+
+            ayuda -= Time.deltaTime;
+            Debug.Log(ayuda);
+          
+        }
+        if (ayuda <= 0)
+        {
+            animator.SetBool("isTakingDamage", false);
+            heSidoAtacado = false;
+            agent.SetDestination(player.position);
+        }
+
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Arbol Golpeado"))
+        {
+            // Reducir salud
+            agent.SetDestination(transform.position);
+        }
+
+
     }
     private void TurnIntoTree()
     {
@@ -123,6 +158,7 @@ public class EnemyMovement : MonoBehaviour
     {
         alreadyAttacked = false;
         animator.SetBool("isAttacking", false);
+
     }
 
     private void OnDrawGizmosSelected()
@@ -133,6 +169,20 @@ public class EnemyMovement : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, sightRange);
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, transformRange);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        
+        if (other.tag == "ArmaPalo")
+        {
+            animator.SetBool("isTakingDamage", true);
+            animator.SetBool("isAttacking", false);
+            hitbox.GetComponent<BoxCollider>().enabled = false;
+            heSidoAtacado = true;
+            ayuda = 0.4f;
+
+        }
     }
 
 }
