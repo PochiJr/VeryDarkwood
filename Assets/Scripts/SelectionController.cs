@@ -5,7 +5,7 @@ using UnityEngine;
 public class SelectionController : MonoBehaviour
 {
     public Vector3 escala = new Vector3(0, 0, 0);
-    private Transform _selection;
+    private Transform seleccion;
     public GameObject seleccionado;
     private GameObject outline;
     private bool objetoSeleccionadoCreado = false;
@@ -15,14 +15,14 @@ public class SelectionController : MonoBehaviour
 
     void Update()
     {
-        if (_selection != null)
+        if (seleccion != null)
         {
             if (objetoSeleccionadoCreado)
             {
                 Destroy(outline);
                 objetoSeleccionadoCreado = false;
             }
-            _selection = null;
+            seleccion = null;
         }
 
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -33,7 +33,7 @@ public class SelectionController : MonoBehaviour
 
             if (selection.tag == "Seleccionable")
             {
-                _selection = selection;
+                seleccion = selection;
                 // crear outline -->
                 if (!objetoSeleccionadoCreado)
                 {

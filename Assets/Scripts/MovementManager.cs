@@ -140,11 +140,20 @@ public class MovementManager : MonoBehaviour
     {
 
         if (other.tag == "EnemigoArbol") {
-           
-            animator.SetBool("isTakingDamage", true);
 
             // Reduccion de salud
             barraSalud.fillAmount -= 0.3f;
+            if (barraSalud.fillAmount <= 0.0f)
+            {
+                // Morir
+                animator.SetBool("isDead", true);
+            } else
+            {
+
+                animator.SetBool("isTakingDamage", true);
+            }
+
+            
             ayuda = 0.2f;
             heSidoAtacado = true;
         }

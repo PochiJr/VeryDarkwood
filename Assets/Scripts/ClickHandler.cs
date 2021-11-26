@@ -34,7 +34,7 @@ public class ClickHandler : MonoBehaviour
             // Lanzamos el raycast desde el puntero y pasamos los resultados a la lista
             raycaster.Raycast(pointer, results);
 
-            Debug.Log(results[0].gameObject.tag);
+            //Debug.Log(results[0].gameObject.tag);
             if (results.Count > 0 && results[0].gameObject.tag == "UIItemSlot")
             {
                 

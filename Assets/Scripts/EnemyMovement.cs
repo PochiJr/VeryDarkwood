@@ -34,6 +34,7 @@ public class EnemyMovement : MonoBehaviour
     // Receive Damage
     private bool heSidoAtacado = false;
     private float ayuda = 0.0f;
+    private float vida = 1.0f;
     public GameObject hitbox;
 
     private void Awake()
@@ -176,11 +177,21 @@ public class EnemyMovement : MonoBehaviour
         
         if (other.tag == "ArmaPalo")
         {
-            animator.SetBool("isTakingDamage", true);
-            animator.SetBool("isAttacking", false);
+            vida -= 0.25f;
+            if (vida <= 0)
+            {
+                animator.SetBool("isDead", true);
+                agent.SetDestination(transform.position);
+
+            }else
+            {
+                animator.SetBool("isTakingDamage", true);
+                animator.SetBool("isAttacking", false);
+            }
+            
             hitbox.GetComponent<BoxCollider>().enabled = false;
             heSidoAtacado = true;
-            ayuda = 0.4f;
+            ayuda = 0.01f;
 
         }
     }
