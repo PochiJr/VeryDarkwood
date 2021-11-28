@@ -26,17 +26,24 @@ public class InventarioPrincipal : MonoBehaviour
         slotPrefab = Resources.Load<GameObject>("Modelos3D/Prefabs/UIItemSlot");
 
         item[] tempItems = new item[3]; // Solo hay 3 tipos de objeto por ahora
-        tempItems[0] = Resources.Load<item>("Items/Sword");
-        tempItems[1] = Resources.Load<item>("Items/Coin");
+        tempItems[0] = Resources.Load<item>("Items/HPpotion");
+        tempItems[1] = Resources.Load<item>("Items/SPDpotion");
         tempItems[2] = Resources.Load<item>("Items/Ring");
 
         for (int i = 0; i < 8; i++)
         {
-            int index = Random.Range(0, 3);
-            int amount = Random.Range(1, tempItems[index].maxStack);
-            int condition = tempItems[index].maxDuration;
+            // Decidimos, de manera aleatoria, si añadir un slot vacio o no
+            if(Random.Range(0, 3) == 0) // 33% de ser vacio
+            {
+                items.Add(new ItemSlot());
+            } else
+            {
+                int index = Random.Range(0, 3);
+                int amount = Random.Range(1, tempItems[index].maxStack);
+                int condition = tempItems[index].maxDuration;
 
-            items.Add(new ItemSlot(tempItems[index].name, amount, condition));
+                items.Add(new ItemSlot(tempItems[index].name, amount, condition));
+            }
         }
     }
 

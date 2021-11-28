@@ -78,6 +78,7 @@ public class ItemSlot
         int _amount = slotA.amount;
         int _condition = slotA.condition;
 
+
         // Copiamos los valores del slotB en el slotA
         slotA.item = slotB.item;
         slotA.amount = slotB.amount;

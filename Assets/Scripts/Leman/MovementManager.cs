@@ -58,25 +58,9 @@ public class MovementManager : MonoBehaviour
             animator.SetBool("isWalking", false);
         }
 
-        // Receiving damage
-        if (barraSalud.fillAmount < barraSaludGradual.fillAmount)
-        {
-            barraSaludGradual.fillAmount -= Time.deltaTime;
-        }
+        
 
-        // Fighting
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            if (!estaArmado)
-            {
-                animator.SetBool("weaponChange", true);
-                estaArmado = true;
-            } else
-            {
-                animator.SetBool("weaponChange", false);
-                estaArmado = false;
-            }
-        }
+        
         // Golpear
         if (Input.GetMouseButtonDown(1))
         {
@@ -99,7 +83,6 @@ public class MovementManager : MonoBehaviour
             !animator.GetCurrentAnimatorStateInfo(0).IsName("GS Impact")) && heSidoAtacado)
         {
             ayuda -= Time.deltaTime;
-            Debug.Log(ayuda);
             if (ayuda <= 0.0f)
             {
                 animator.SetBool("isTakingDamage", false);
@@ -111,6 +94,12 @@ public class MovementManager : MonoBehaviour
             animator.GetCurrentAnimatorStateInfo(0).IsName("GS Impact"))
         {
             velocidadMovimiento = 0.0f;
+        }
+
+        // Barra de salud secundaria
+        if (barraSalud.fillAmount < barraSaludGradual.fillAmount)
+        {
+            barraSaludGradual.fillAmount -= Time.deltaTime;
         }
 
         /* 
@@ -138,7 +127,6 @@ public class MovementManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-
         if (other.tag == "EnemigoArbol") {
 
             // Reduccion de salud
@@ -152,8 +140,6 @@ public class MovementManager : MonoBehaviour
 
                 animator.SetBool("isTakingDamage", true);
             }
-
-            
             ayuda = 0.2f;
             heSidoAtacado = true;
         }

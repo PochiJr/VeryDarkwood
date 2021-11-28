@@ -519,9 +519,9 @@ AnimatorStateMachine:
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
-  m_AnyStatePosition: {x: 40, y: -110, z: 0}
-  m_EntryPosition: {x: 40, y: -40, z: 0}
-  m_ExitPosition: {x: 1050, y: -110, z: 0}
+  m_AnyStatePosition: {x: -10, y: 120, z: 0}
+  m_EntryPosition: {x: -10, y: 170, z: 0}
+  m_ExitPosition: {x: 970, y: 120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
   m_DefaultState: {fileID: 1866913515961591846}
 --- !u!1101 &-361013183324770503
@@ -633,7 +633,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Standing W_Briefcase Idle
+  m_Name: Idle
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -901,7 +901,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Walking With Shopping Bag
+  m_Name: Andar
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:

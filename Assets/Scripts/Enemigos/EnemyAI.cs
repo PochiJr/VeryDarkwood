@@ -57,31 +57,7 @@ public class EnemyAI : MonoBehaviour
             if (playerInStealthRange && playerInTransformRange) TurnIntoMonster();
             if (!playerInSightRange && !playerInStealthRange && !playerInTransformRange) agent.SetDestination(transform.position);
         }
-        
     }
-
-    /*private void Patroling()
-    {
-        if (!walkPointSet) SearchWalkPoint();
-        if (walkPointSet)
-            agent.SetDestination(walkPoint);
-
-        // Calculamos la distancia al walkPoint para ver si ya hemos llegado a él
-        Vector3 distanceToWalkpoint = transform.position - walkPoint;
-        if (distanceToWalkpoint.magnitude < 1f)
-            walkPointSet = false;
-    }*/
-   
-   /* private void SearchWalkPoint()
-    {
-        // Calculate random point in range
-        float randomZ = Random.Range(-walkPointRange, walkPointRange);
-        float randomX = Random.Range(-walkPointRange, walkPointRange);
-
-        walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
-        // Comprobamos que este walkPoint esté en el mapa que si no se va a suicidar el enemigo
-        if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround)) walkPointSet = true;
-    }*/
 
     private void ChasePlayer()
     {
@@ -101,22 +77,7 @@ public class EnemyAI : MonoBehaviour
         // Destruimos este objeto y nos convertimos en mocho 
         Instantiate(bichoPlanta, transform.position, transform.rotation);
         Destroy(this.gameObject);
-
-       /* if (!alreadyAttacked)
-        {
-            // Codigo del ataque
-            // Codigo del ataque
-            // Cambiar animacion a ataque
-            Debug.Log("Te estoy atacando");
-
-            alreadyAttacked = true;
-            Invoke(nameof(ResetAttack), timeBetweenAttacks);
-        }*/
     }
-   /* private void ResetAttack()
-    {
-        alreadyAttacked = false;
-    }*/
 
     private void OnDrawGizmosSelected()
     {

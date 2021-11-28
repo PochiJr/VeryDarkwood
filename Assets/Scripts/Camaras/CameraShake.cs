@@ -40,7 +40,6 @@ public class CameraShake : MonoBehaviour
             
             if (tiempoLimite >= 0f)
             {
-                Debug.Log("Quedan de animacion: " + tiempoLimite);
                 elapsedTime = duracion;
             }
         }
