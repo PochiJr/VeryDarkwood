@@ -31,11 +31,16 @@ public class ObjetosActivos : MonoBehaviour
     public ParticleSystem particleSystemSPD;
     public Image barraSalud;
     public Image barraSaludGradual;
+    public GameObject player;
+    private float SPDTimer = 60f;
+    private float velocidadMovimientoTemp;
+    private bool isEmpocionado = false;
     private int slotIndex;
 
     private void Start()
     {
         slotPrefab = Resources.Load<GameObject>("Modelos3D/Prefabs/UIItemSlot");
+        player = GameObject.Find("Player");
 
         item objetoActivoInicial = new item();
         objetoActivoInicial = Resources.Load<item>("Items/Flashlight");
@@ -180,7 +185,13 @@ public class ObjetosActivos : MonoBehaviour
                         break;
                     case "SPDpotion":
                         // Hacer que de velocidad en cualquier caso
+                        velocidadMovimientoTemp = player.GetComponent<MovementManager>().bonusVelocidad;
+                        Debug.Log(velocidadMovimientoTemp);
+                        player.GetComponent<MovementManager>().bonusVelocidad = 2f;
+                        isEmpocionado = true;
 
+                        SPDTimer = 60.0f;
+                        
                         //
                         if (UISlots[slotIndex].itemSlot.amount == 1)
                         {
@@ -201,7 +212,19 @@ public class ObjetosActivos : MonoBehaviour
 
     }
 
-
+    private void FixedUpdate()
+    {
+        if (isEmpocionado)
+        {
+            SPDTimer -= Time.fixedDeltaTime;
+            if (SPDTimer <= 0)
+            {
+                player.GetComponent<MovementManager>().bonusVelocidad = velocidadMovimientoTemp;
+                isEmpocionado = false;
+            }
+        }
+        
+    }
 
     public void CloseContainer()
     {

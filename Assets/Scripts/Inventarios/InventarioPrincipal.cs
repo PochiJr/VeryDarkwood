@@ -25,10 +25,9 @@ public class InventarioPrincipal : MonoBehaviour
     {
         slotPrefab = Resources.Load<GameObject>("Modelos3D/Prefabs/UIItemSlot");
 
-        item[] tempItems = new item[3]; // Solo hay 3 tipos de objeto por ahora
+        item[] tempItems = new item[2]; // Solo hay 2 tipos de objeto por ahora
         tempItems[0] = Resources.Load<item>("Items/HPpotion");
         tempItems[1] = Resources.Load<item>("Items/SPDpotion");
-        tempItems[2] = Resources.Load<item>("Items/Ring");
 
         for (int i = 0; i < 8; i++)
         {
@@ -38,7 +37,7 @@ public class InventarioPrincipal : MonoBehaviour
                 items.Add(new ItemSlot());
             } else
             {
-                int index = Random.Range(0, 3);
+                int index = Random.Range(0, 2);
                 int amount = Random.Range(1, tempItems[index].maxStack);
                 int condition = tempItems[index].maxDuration;
 
@@ -59,7 +58,6 @@ public class InventarioPrincipal : MonoBehaviour
     public void OpenContainer(List<ItemSlot> slots)
     {
         parentWindow.SetActive(true);
-        // Es el menú de inicio así que no queremos que tenga título porque queda feo
         // title.text = containerName.ToUpper();
         title.text = string.Empty;
         // Loopeamos cada objeto

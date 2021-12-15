@@ -7,6 +7,7 @@ public class MovementManager : MonoBehaviour
 {
     // Movement
     public float velocidadMovimiento = 5f;
+    public float bonusVelocidad = 1f;
     public float gravedad = 0.05f;
     private CharacterController controller;
 
@@ -36,7 +37,7 @@ public class MovementManager : MonoBehaviour
     {
         // Movement
         Vector3 movimiento = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-        controller.Move(movimiento * Time.deltaTime * velocidadMovimiento);
+        controller.Move(movimiento * Time.deltaTime * velocidadMovimiento * bonusVelocidad);
 
         Vector3 velocity = new Vector3(0, gravedad, 0);
         controller.Move(velocity);
