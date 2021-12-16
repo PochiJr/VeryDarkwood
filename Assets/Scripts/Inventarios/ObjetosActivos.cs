@@ -25,6 +25,7 @@ public class ObjetosActivos : MonoBehaviour
 
     // Gestion del objeto activo
     public GameObject linterna;
+    public AudioSource sonidoLinterna;
     public GameObject arma;
     public Animator animator;
     public ParticleSystem particleSystemHP;
@@ -36,6 +37,7 @@ public class ObjetosActivos : MonoBehaviour
     private float velocidadMovimientoTemp;
     private bool isEmpocionado = false;
     private int slotIndex;
+
 
     private void Start()
     {
@@ -150,9 +152,15 @@ public class ObjetosActivos : MonoBehaviour
                 {
                     case "Flashlight":
                         if (linterna.GetComponent<Light>().enabled)
+                        {
                             linterna.GetComponent<Light>().enabled = false;
+                            sonidoLinterna.Play();
+                        }
                         else
+                        {
                             linterna.GetComponent<Light>().enabled = true;
+                            sonidoLinterna.Play();
+                        }
                         break;
                     case "WoodPlank":
                         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") || animator.GetCurrentAnimatorStateInfo(0).IsName("Andar")) 
@@ -168,6 +176,7 @@ public class ObjetosActivos : MonoBehaviour
                         break;
                     case "HPpotion":
                         // hacer que cure en cualquier caso:
+                        parentWindow.GetComponent<AudioSource>().Play();
                         barraSalud.fillAmount += 0.2f;
                         barraSaludGradual.fillAmount += 0.2f;
                         // 
@@ -185,6 +194,7 @@ public class ObjetosActivos : MonoBehaviour
                         break;
                     case "SPDpotion":
                         // Hacer que de velocidad en cualquier caso
+                        parentWindow.GetComponent<AudioSource>().Play();
                         velocidadMovimientoTemp = player.GetComponent<MovementManager>().bonusVelocidad;
                         Debug.Log(velocidadMovimientoTemp);
                         player.GetComponent<MovementManager>().bonusVelocidad = 2f;

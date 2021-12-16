@@ -68,7 +68,6 @@ public class Loot : MonoBehaviour
     // cuando el raycast detecte un cofre
     private void Update()        
     {
-        
         if (Input.GetMouseButtonDown(0) )
         {
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -79,6 +78,7 @@ public class Loot : MonoBehaviour
                 if (selection.tag == "Seleccionable")
                 {
                     OpenContainer(items);
+                    GetComponent<AudioSource>().Play();
                 }
             }
         }
