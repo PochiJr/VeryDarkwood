@@ -15,9 +15,8 @@ public class InventarioPrincipal : MonoBehaviour
     public string containerName;
     GameObject slotPrefab;
 
-    // El del video dice que esta lista la podemos guardar en cualquier 
-    // otro lado, es el Model, si la queremos mostrar en otro lado
-    // podriamos pasarla como parametro
+    private bool isOpen = false;
+    
     List<ItemSlot> items = new List<ItemSlot>();
     List<UIItemSlot> UISlots = new List<UIItemSlot>();
 
@@ -48,10 +47,16 @@ public class InventarioPrincipal : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-            CloseContainer();
-        else if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q) && !isOpen)
+        {
             OpenContainer(items);
+            isOpen = true;
+        } else if (Input.GetKeyDown(KeyCode.Q) && isOpen)
+        {
+            CloseContainer();
+            isOpen = false;
+        }
+            
     }
 
 

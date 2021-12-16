@@ -128,10 +128,14 @@ public class MovementManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "EnemigoArbol") {
+        if (other.tag == "EnemigoArbol" || other.tag == "EnemigoArbusto") {
 
             // Reduccion de salud
-            barraSalud.fillAmount -= 0.3f;
+            if (other.tag == "EnemigoArbol")
+                barraSalud.fillAmount -= 0.3f;
+            else if (other.tag == "EnemigoArbusto")
+                barraSalud.fillAmount -= 0.1f;
+
             if (barraSalud.fillAmount <= 0.0f)
             {
                 // Morir

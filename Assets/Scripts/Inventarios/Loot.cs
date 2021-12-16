@@ -29,6 +29,8 @@ public class Loot : MonoBehaviour
     PointerEventData pointer;
     EventSystem eventSystem;
 
+    private bool isAbierto = false;
+
     private void Awake()
     {
         raycaster = GetComponent<GraphicRaycaster>();
@@ -40,18 +42,25 @@ public class Loot : MonoBehaviour
     {
         slotPrefab = Resources.Load<GameObject>("Modelos3D/Prefabs/UIItemSlot");
 
-        item[] tempItems = new item[3]; // Solo hay 3 tipos de objeto por ahora
-        tempItems[0] = Resources.Load<item>("Items/Sword");
-        tempItems[1] = Resources.Load<item>("Items/Coin");
-        tempItems[2] = Resources.Load<item>("Items/Ring");
+        item[] tempItems = new item[2]; // Solo hay 2 tipos de objeto por ahora
+        tempItems[0] = Resources.Load<item>("Items/HPpotion");
+        tempItems[1] = Resources.Load<item>("Items/SPDpotion");
 
         for (int i = 0; i < 8; i++)
         {
-            int index = UnityEngine.Random.Range(0, 3);
-            int amount = UnityEngine.Random.Range(1, tempItems[index].maxStack);
-            int condition = tempItems[index].maxDuration;
+            // Decidimos, de manera aleatoria, si añadir un slot vacio o no
+            if (UnityEngine.Random.Range(0, 3) == 0) // 33% de ser vacio
+            {
+                items.Add(new ItemSlot());
+            }
+            else
+            {
+                int index = UnityEngine.Random.Range(0, 2);
+                int amount = UnityEngine.Random.Range(1, tempItems[index].maxStack);
+                int condition = tempItems[index].maxDuration;
 
-            items.Add(new ItemSlot(tempItems[index].name, amount, condition));
+                items.Add(new ItemSlot(tempItems[index].name, amount, condition));
+            }
         }
     }
 
@@ -59,9 +68,8 @@ public class Loot : MonoBehaviour
     // cuando el raycast detecte un cofre
     private void Update()        
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-            CloseContainer();
-        else if (Input.GetMouseButtonDown(0))
+        
+        if (Input.GetMouseButtonDown(0) )
         {
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;

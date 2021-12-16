@@ -8,6 +8,9 @@ TagManager:
   - UIItemSlot
   - Seleccionable
   - ArmaPalo
+  - EnemigoArbusto
+  - Icono
+  - Loot
   layers:
   - Default
   - TransparentFX

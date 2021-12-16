@@ -35,6 +35,7 @@ public class EnemyMovement : MonoBehaviour
     private bool heSidoAtacado = false;
     private float ayuda = 0.0f;
     private float vida = 1.0f;
+    private float ttl = 4f;
     public GameObject hitbox;
 
     private void Awake()
@@ -46,6 +47,7 @@ public class EnemyMovement : MonoBehaviour
     private void Start()
     {
         spawnPoint = transform.position;
+        
     }
 
     private void Update()
@@ -66,8 +68,16 @@ public class EnemyMovement : MonoBehaviour
             else if (playerInAttackRange) AttackPlayer();
             if (!playerInSightRange && !playerInTransformRange && !playerInAttackRange) TurnIntoTree();
         }
+        if (vida <= 0)
+        {
+            agent.SetDestination(transform.position);
+            ttl -= Time.deltaTime;
+            if (ttl <= 0)
+            {
+                Destroy(this.gameObject);
+            }
+        }
 
-        
     }
 
     /*private void Patroling()
